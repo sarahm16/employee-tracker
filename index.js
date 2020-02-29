@@ -20,19 +20,19 @@ inquirer.prompt(
             type: 'list',
             message: 'What would you like to do?',
             name: 'task',
-            choices: ['View all employees', 'View all departments', 'View all roles', 'Add a department', 'Add an employee', 'Add a role']
+            choices: ['View all employees', 'View all departments', 'View all roles', 'Add a department', 'Add an employee', 'Add a role', 'Update employee role']
         }
     ]
 ).then(function(response) {
     switch(response.task) {
         case 'View all employees':
-            console.log('view all');
+            displayEmployees();
         break;
         case 'View all departments':
-            console.log('view departments');
+            displayDepartments();
         break;
         case 'View all roles':
-
+            displayRoles();
         break;
         case 'Add a department':
             addDepartment();
@@ -43,25 +43,36 @@ inquirer.prompt(
         case 'Add a role':
             addRole();
         break;
+        case 'Update employee role':
+            updateRole();
+        break;
     }
 })
 
 function addEmployee() {
-    inquirer.prompt(
-        [
-            {
-                type: 'input',
-                message: 'What is the employees name?',
-                name: 'name'
-            },
-            {
-                type: 'list',
-                message: 'What is their role?',
-                name: 'role',
-                choices: []
-            }
-        ]
-    )
+    connection.query('SELECT * FROM role', function(err, results) {
+        inquirer.prompt(
+            [
+                {
+                    type: 'input',
+                    message: 'What is the employees name?',
+                    name: 'name'
+                },
+                {
+                    type: 'list',
+                    message: 'What is their role?',
+                    name: 'role',
+                    choices: function() {
+                        let choiceArray = [];
+                        for(let i=0; i<results.length; i++) {
+                            choiceArray.push(results[i].title)
+                        }
+                        return choiceArray;
+                    }
+                }
+            ]
+        )
+    })
 }
 
 function addRole() {
