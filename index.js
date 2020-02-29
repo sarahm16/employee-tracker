@@ -38,10 +38,28 @@ inquirer.prompt(
 
         break;
         case 'Add an employee':
-        
+            addEmployee();
         break;
         case 'Add a role':
         
         break;
     }
 })
+
+function addEmployee() {
+    inquirer.prompt(
+        [
+            {
+                type: 'input',
+                message: 'What is the employees name?',
+                name: 'name'
+            },
+            {
+                type: 'list',
+                message: 'What is their role?',
+                name: 'role',
+                choices: []
+            }
+        ]
+    )
+}
