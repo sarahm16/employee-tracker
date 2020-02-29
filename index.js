@@ -35,13 +35,13 @@ inquirer.prompt(
 
         break;
         case 'Add a department':
-
+            addDepartment();
         break;
         case 'Add an employee':
             addEmployee();
         break;
         case 'Add a role':
-        
+            addRole();
         break;
     }
 })
@@ -62,4 +62,41 @@ function addEmployee() {
             }
         ]
     )
+}
+
+function addRole() {
+    inquirer.prompt(
+        [
+            {
+                type: 'input',
+                message: 'What is the role?',
+                name: 'role'
+            },
+            {
+                type: 'input',
+                message: 'How much does this role earn annually?',
+                name: 'salary'
+            },
+            {
+                type: 'list',
+                message: 'Which department is this role in?',
+                name: 'department',
+                choices: ['0', '1', '2']
+            }
+        ]
+
+    ).then(function(response) {
+        connection.query(
+            'INSERT INTO role SET ?',
+            {
+                title: response.role,
+                salary: response.salary,
+                department_id: response.department
+            }
+        )
+    })
+}
+
+function addDepartment() {
+
 }
