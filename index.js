@@ -14,40 +14,42 @@ connection.connect(function(err) {
     console.log(`Connected as id ${connection.threadId}`)
 })
 
-inquirer.prompt(
-    [
-        {
-            type: 'list',
-            message: 'What would you like to do?',
-            name: 'task',
-            choices: ['View all employees', 'View all departments', 'View all roles', 'Add a department', 'Add an employee', 'Add a role', 'Update employee role']
+function start() {
+    inquirer.prompt(
+        [
+            {
+                type: 'list',
+                message: 'What would you like to do?',
+                name: 'task',
+                choices: ['View all employees', 'View all departments', 'View all roles', 'Add a department', 'Add an employee', 'Add a role', 'Update employee role']
+            }
+        ]
+    ).then(function(response) {
+        switch(response.task) {
+            case 'View all employees':
+                displayEmployees();
+            break;
+            case 'View all departments':
+                displayDepartments();
+            break;
+            case 'View all roles':
+                displayRoles();
+            break;
+            case 'Add a department':
+                addDepartment();
+            break;
+            case 'Add an employee':
+                addEmployee();
+            break;
+            case 'Add a role':
+                addRole();
+            break;
+            case 'Update employee role':
+                updateRole();
+            break;
         }
-    ]
-).then(function(response) {
-    switch(response.task) {
-        case 'View all employees':
-            displayEmployees();
-        break;
-        case 'View all departments':
-            displayDepartments();
-        break;
-        case 'View all roles':
-            displayRoles();
-        break;
-        case 'Add a department':
-            addDepartment();
-        break;
-        case 'Add an employee':
-            addEmployee();
-        break;
-        case 'Add a role':
-            addRole();
-        break;
-        case 'Update employee role':
-            updateRole();
-        break;
-    }
-})
+    })    
+}
 
 function addEmployee() {
     connection.query('SELECT * FROM role', function(err, results) {
