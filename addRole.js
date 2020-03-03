@@ -27,7 +27,13 @@ function addRole() {
                     type: 'list',
                     message: 'Which department is this role in?',
                     name: 'department',
-                    choices: ['0', '1', '2']
+                    choices: function() {
+                        let choiceArray = []
+                        for(let i=0; i<result.length; i++) {
+                            choiceArray.push(result[i].name);
+                        }
+                        return choiceArray;
+                    }
                 }
             ]
     
