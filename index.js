@@ -1,5 +1,7 @@
 const mysql = require('mysql');
 const inquirer = require('inquirer');
+const addEmployee = require('./employee');
+const addRole = require('./addRole');
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -11,7 +13,8 @@ const connection = mysql.createConnection({
 
 connection.connect(function(err) {
     if(err) throw err;
-    console.log(`Connected as id ${connection.threadId}`)
+    console.log(`Connected as id ${connection.threadId}`);
+    start();
 })
 
 function start() {
@@ -49,65 +52,6 @@ function start() {
             break;
         }
     })    
-}
-
-function addEmployee() {
-    connection.query('SELECT * FROM role', function(err, results) {
-        inquirer.prompt(
-            [
-                {
-                    type: 'input',
-                    message: 'What is the employees name?',
-                    name: 'name'
-                },
-                {
-                    type: 'list',
-                    message: 'What is their role?',
-                    name: 'role',
-                    choices: function() {
-                        let choiceArray = [];
-                        for(let i=0; i<results.length; i++) {
-                            choiceArray.push(results[i].title)
-                        }
-                        return choiceArray;
-                    }
-                }
-            ]
-        )
-    })
-}
-
-function addRole() {
-    inquirer.prompt(
-        [
-            {
-                type: 'input',
-                message: 'What is the role?',
-                name: 'role'
-            },
-            {
-                type: 'input',
-                message: 'How much does this role earn annually?',
-                name: 'salary'
-            },
-            {
-                type: 'list',
-                message: 'Which department is this role in?',
-                name: 'department',
-                choices: ['0', '1', '2']
-            }
-        ]
-
-    ).then(function(response) {
-        connection.query(
-            'INSERT INTO role SET ?',
-            {
-                title: response.role,
-                salary: response.salary,
-                department_id: response.department
-            }
-        )
-    })
 }
 
 function addDepartment() {
