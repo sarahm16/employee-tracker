@@ -42,18 +42,28 @@ function addEmployee() {
                 }
             ]
         ).then(function(response) {
-            addDB(response.first, response.last, response.role);
+            getRoleId(response.first, response.last, response.role);
         })
     })
 }
 
+function getRoleId(first, last, role) {
+    connection.query('SELECT id FROM role WHERE title = ?', [role], function(err, result) {
+        if(err) throw err;
+        let role = result[0].id;
+        //console.log(first, last, role)
+        addDB(first, last, role);
+    })
+}
+
 function addDB(first, last, role) {
-    console.log(role);
+    //console.log(role);
     connection.query(
         'INSERT INTO employee SET ?',
         {
             first_name: first,
             last_name: last,
+            role_id: role
         }
     )
 }
