@@ -14,20 +14,20 @@ connection.connect(function(err) {
     console.log(`Connected as id ${connection.threadId}`)
 })
 
-function addDepartment() {
+function addDepartment(variable) {
     inquirer.prompt(
         [
             {
                 type: 'input',
-                message: 'What department would you like to add?',
+                message: `What ${variable} would you like to add?`,
                 name: 'department'
             }
         ]
     ).then(function(response) {
         connection.query(
-            'INSERT INTO department SET ?',
+            `INSERT INTO ${variable} SET ?`,
             {
-                name: response.department
+                name: response[`${variable}`]
             }
         )
     })

@@ -41,7 +41,7 @@ function start() {
                 view('role');
             break;
             case 'Add a department':
-                addDepartment();
+                addDepartment('department');
             break;
             case 'Add an employee':
                 addEmployee();
@@ -53,5 +53,5 @@ function start() {
                 updateRole();
             break;
         }
-    })    
+    })
 }
