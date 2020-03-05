@@ -3,6 +3,7 @@ const inquirer = require('inquirer');
 const addEmployee = require('./employee');
 const addRole = require('./addRole');
 const addDepartment = require('./addDepartment');
+const viewDepartments = require('./viewDepartments');
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -34,7 +35,7 @@ function start() {
                 displayEmployees();
             break;
             case 'View all departments':
-                displayDepartments();
+                viewDepartments();
             break;
             case 'View all roles':
                 displayRoles();
