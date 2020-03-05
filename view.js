@@ -9,11 +9,11 @@ const connection = mysql.createConnection({
     database: 'employee_db'
 })
 
-function viewDepartments() {
-    connection.query('SELECT * FROM department', function(err, result) {
+function view(table) {
+    connection.query(`SELECT * FROM ${table}`, function(err, result) {
         if(err) throw err;
         console.table(result);
     })
 }
 
-module.exports = viewDepartments;
+module.exports = view;
