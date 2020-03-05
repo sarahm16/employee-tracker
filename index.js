@@ -2,6 +2,7 @@ const mysql = require('mysql');
 const inquirer = require('inquirer');
 const addEmployee = require('./employee');
 const addRole = require('./addRole');
+const addDepartment = require('./addDepartment');
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -52,23 +53,4 @@ function start() {
             break;
         }
     })    
-}
-
-function addDepartment() {
-    inquirer.prompt(
-        [
-            {
-                type: 'input',
-                message: 'What department would you like to add?',
-                name: 'department'
-            }
-        ]
-    ).then(function(response) {
-        connection.query(
-            'INSERT INTO department SET ?',
-            {
-                name: response.department
-            }
-        )
-    })
 }
