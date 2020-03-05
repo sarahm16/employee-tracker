@@ -38,16 +38,29 @@ function addRole() {
             ]
     
         ).then(function(response) {
-            connection.query(
-                'INSERT INTO role SET ?',
-                {
-                    title: response.role,
-                    salary: response.salary,
-                    department_id: response.department
-                }
-            )
+            getDepartmentId(response.role, response.salary, response.department)
         })
     }) 
+}
+
+function getDepartmentId(role, salary, department) {
+    connection.query('SELECT id FROM department WHERE name = ?', [department], function(err, result) {
+        if(err) throw err;
+        let departmentID = result[0].id;
+        //console.log(departmentID);
+        addDB(role, salary, departmentID)
+    })
+}
+
+function addDB(role, salary, departmentID) {
+    connection.query(
+        'INSERT INTO role SET ?',
+        {
+            title: role,
+            salary: salary,
+            department_id: departmentID
+        }
+    )
 }
 
 module.exports = addRole;
