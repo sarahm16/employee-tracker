@@ -104,5 +104,6 @@ function selectWhere(whatToSelect, table, col, colValue, cb) {
 
 module.exports = {
     addRole: addRole,
-    addDepartment: addDepartment
+    addDepartment: addDepartment,
+    selectWhere: selectWhere
 }

@@ -1,6 +1,20 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql')
-const connection = require('./index');
+//const connection = require('./index');
+const selectWhere = require('./add').selectWhere;
+
+const connection = mysql.createConnection({
+    host: 'localhost',
+    port: 3306,
+    user: 'root',
+    password: '1084829Ss',
+    database: 'employee_db'
+})
+
+connection.connect(function(err) {
+    if(err) throw err;
+    console.log(`Connected as id ${connection.threadId}`);
+})
 
 function addEmployee() {
     connection.query('SELECT * FROM role', function(err, results) {
@@ -30,17 +44,12 @@ function addEmployee() {
                 }
             ]
         ).then(function(response) {
-            getRoleId(response.first, response.last, response.role);
+            selectWhere('id', 'role', 'title', response.role, function(result) {
+                let id = result[0].id;
+                console.log(id);
+            })
+            //addDB();
         })
-    })
-}
-
-function getRoleId(first, last, role) {
-    connection.query('SELECT id FROM role WHERE title = ?', [role], function(err, result) {
-        if(err) throw err;
-        let role = result[0].id;
-        //console.log(first, last, role)
-        addDB(first, last, role);
     })
 }
 
