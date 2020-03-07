@@ -25,8 +25,8 @@ function addDepartment() {
             }
         ]
     ).then(function(response) {
-        let object = {name: response.department}
-        insert('department', object, function(err) {
+        let whatToInsert = {name: response.department}
+        insert('department', whatToInsert, function(err) {
             if(err) throw err;
         })
     })
@@ -62,20 +62,20 @@ function addRole() {
         ).then(function(response) {
             selectWhere('id', 'department', 'name', response.department, function(result) {
                 let id = result[0].id;
-                let object = {
+                let whatToInsert = {
                     title: response.role,
                     salary: response.salary,
                     department_id: id
                 }
-                insert('role', object);
+                insert('role', whatToInsert);
             })
         })
     })
 }
 
-function insert(table, object) {
+function insert(table, whatToInsert) {
     let queryString = 'INSERT INTO ?? SET ?';
-    connection.query(queryString, [table, object], function(err) {
+    connection.query(queryString, [table, whatToInsert], function(err) {
         if(err) throw err;
     })
 }
