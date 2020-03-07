@@ -64,21 +64,22 @@ function addRole() {
         ).then(function(response) {
             selectWhere('id', 'department', 'name', response.department, function(result) {
                 let id = result[0].id;
-                addDB(response.role, response.salary, id);
+                let object = {
+                    title: response.role,
+                    salary: response.salary,
+                    department_id: id
+                }
+                insert('role', object);
             })
         })
     })
 }
 
-function addDB(name, salary, id) {
-    connection.query(
-        'INSERT INTO role SET ?',
-        {
-            title: name,
-            salary: salary,
-            department_id: id
-        }
-    )
+function insert(table, object) {
+    let queryString = 'INSERT INTO ?? SET ?';
+    connection.query(queryString, [table, object], function(err) {
+        if(err) throw err;
+    })
 }
 
 function select(whatToSelect, table, cb) {
@@ -87,10 +88,6 @@ function select(whatToSelect, table, cb) {
         if(err) throw err;
         cb(result);
     })
-}
-
-function insert() {
-
 }
 
 function selectWhere(whatToSelect, table, col, colValue, cb) {
