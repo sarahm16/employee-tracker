@@ -25,12 +25,10 @@ function addDepartment() {
             }
         ]
     ).then(function(response) {
-        connection.query(
-            `INSERT INTO department SET ?`,
-            {
-                name: response.department
-            }
-        );
+        let object = {name: response.department}
+        insert('department', object, function(err) {
+            if(err) throw err;
+        })
     })
 }
 
@@ -82,9 +80,9 @@ function insert(table, object) {
     })
 }
 
-function select(whatToSelect, table, cb) {
+function selectAll(table, cb) {
     let queryString = 'SELECT * FROM ?';
-    connection.query(queryString, [whatToSelect, table], function(err, result) {
+    connection.query(queryString, [table], function(err, result) {
         if(err) throw err;
         cb(result);
     })
@@ -95,7 +93,6 @@ function selectWhere(whatToSelect, table, col, colValue, cb) {
     connection.query(queryString, [whatToSelect, table, col, colValue], function(err, result) {
         if(err) throw err;
         cb(result);
-        //let id = result[0].id;
     });
 }
 
