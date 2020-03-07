@@ -1,9 +1,10 @@
 const mysql = require('mysql');
 const inquirer = require('inquirer');
 const addEmployee = require('./employee');
-const addRole = require('./addRole');
-const addDepartment = require('./addDepartment');
-const view = require('./view');
+//const addRole = require('./addRole');
+const addRole = require('./add').addRole;
+const addDepartment = require('./add').addDepartment;
+const viewAll = require('./view');
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -35,13 +36,13 @@ function start() {
                 displayEmployees();
             break;
             case 'View all departments':
-                view('department');
+                viewAll('department');
             break;
             case 'View all roles':
-                view('role');
+                viewAll('role');
             break;
             case 'Add a department':
-                addDepartment('department');
+                addDepartment();
             break;
             case 'Add an employee':
                 addEmployee();
@@ -55,3 +56,5 @@ function start() {
         }
     })
 }
+
+module.exports = connection;
