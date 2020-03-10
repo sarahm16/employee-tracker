@@ -5,6 +5,8 @@ The purpose of this app is to allow a user to track employees within the company
 ## How to use
 
 npm install inquirer
+npm install mysql
+
 node index
 
 ## Technologies
