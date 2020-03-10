@@ -1,6 +1,5 @@
 const connection = require('./connection').connection;
 const inquirer = require('inquirer');
-//const mysql = require('mysql')
 const selectWhere = require('./queryFunctions').selectWhere;
 const insert = require('./queryFunctions').insert;
 const viewAll = require('./queryFunctions').viewAll;

@@ -1,5 +1,4 @@
 const mysql = require('mysql');
-const start = require('./index').start;
 
 const connection = mysql.createConnection({
     host: 'localhost',
