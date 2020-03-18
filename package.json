@@ -4,7 +4,8 @@
   "description": "The purpose of this app is to allow a user to track employees within the company. The user may view all employees, view all roles, view all departments, add a role, add a department, add an employee, or update an employee's role",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/sarahm16/employee-tracker/issues"
   },
-  "homepage": "https://github.com/sarahm16/employee-tracker#readme"
+  "homepage": "https://github.com/sarahm16/employee-tracker#readme",
+  "dependencies": {
+    "mysql": "^2.18.1"
+  }
 }
